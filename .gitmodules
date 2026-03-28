@@ -1,0 +1,3 @@
+[submodule "versor"]
+	path = versor
+	url = https://github.com/Concode0/versor.git
