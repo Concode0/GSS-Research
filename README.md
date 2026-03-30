@@ -41,3 +41,7 @@ uv run jupyter lab gss_research.ipynb
 ## Status
 
 Proof-of-concept. Open problems: formal regret bound, convergence proof on Spin(3), adversarial/game testing, scale beyond toy environments. See the notebook discussion for details.
+
+### Current Develop..
+
+See src/ for more expanded research with GSS vs MCTS ( it need more analysis and bug fix may not fair in potential bugs.)
