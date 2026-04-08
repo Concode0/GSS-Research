@@ -45,3 +45,6 @@ Proof-of-concept. Open problems: formal regret bound, convergence proof on Spin(
 ### Current Develop..
 
 See src/ for more expanded research with GSS vs MCTS ( it need more analysis and bug fix may not fair in potential bugs.)
+
+* Testing the possibility of effectively depicting Zero-Sum games through reflexive computation in adversarial game situations.
+* A hypothesis management concept is needed to maintain better prune, directionality, and power than currently available.
