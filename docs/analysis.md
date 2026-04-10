@@ -10,12 +10,12 @@ across 8 diverse environments.
 
 | Environment | GSS (mean reward) | MCTS (mean reward) | Winner |
 |---|---|---|---|
-| bandit | 0.942 | 0.383 | **GSS** |
+| bandit | 0.880 | 0.401 | **GSS** |
 | chain | 0.997 | 1.000 | **MCTS** |
-| cliff | -11.752 | -194.962 | **GSS** |
-| maze5 | 0.910 | 0.889 | **GSS** |
-| maze8 | 0.247 | 0.813 | **MCTS** |
-| frozenlake | 0.007 | -0.650 | **GSS** |
+| cliff | -15.873 | -195.285 | **GSS** |
+| maze5 | 0.897 | 0.889 | **GSS** |
+| maze8 | 0.207 | 0.814 | **MCTS** |
+| frozenlake | -0.091 | -0.631 | **GSS** |
 
 ### bandit
 
@@ -77,8 +77,8 @@ across 8 diverse environments.
 
 | Game | GSS Win Rate | MCTS Win Rate | Winner |
 |---|---|---|---|
-| nim | 0.417 | 0.970 | **MCTS** |
-| connect | 0.500 | 0.500 | **Tie** |
+| nim | 0.451 | 0.970 | **MCTS** |
+| connect | 0.651 | 0.978 | **MCTS** |
 
 ### nim
 
@@ -92,9 +92,9 @@ across 8 diverse environments.
 
 ![Ablation](../figures/ablation_maze5.png)
 
-- **gss**: final reward = 0.930
+- **gss**: final reward = 0.929
 - **gss_lite**: final reward = 0.930
-- **mcts**: final reward = 0.908
+- **mcts**: final reward = 0.902
 
 ## 5. Computation Cost
 
@@ -102,14 +102,14 @@ across 8 diverse environments.
 
 | Environment | GSS (s) | MCTS (s) |
 |---|---|---|
-| bandit | 0.24 | 0.05 |
-| chain | 0.48 | 0.95 |
-| cliff | 1.85 | 95.00 |
-| maze5 | 0.65 | 8.13 |
-| maze8 | 6.57 | 59.75 |
-| frozenlake | 3.10 | 2.08 |
-| nim | 0.13 | 0.28 |
-| connect | 0.13 | 0.11 |
+| bandit | 0.41 | 0.05 |
+| chain | 1.11 | 0.95 |
+| cliff | 9.19 | 93.34 |
+| maze5 | 2.70 | 7.95 |
+| maze8 | 31.65 | 58.70 |
+| frozenlake | 15.41 | 2.12 |
+| nim | 0.36 | 0.28 |
+| connect | 0.49 | 1.03 |
 
 ## 6. Discussion
 
