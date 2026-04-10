@@ -67,6 +67,7 @@ def embed_nim_state(heaps: tuple, max_heap: int = 5) -> torch.Tensor:
 
 def embed_connect_state(board: tuple, rows: int = 4, cols: int = 5) -> torch.Tensor:
     """Board features -> 3D projection. Encodes piece counts and position.
+    Board encoding: 1=player 0, -1=player 1, 0=empty.
     Returns [1, 8]."""
     p1 = 0
     p2 = 0
@@ -74,11 +75,11 @@ def embed_connect_state(board: tuple, rows: int = 4, cols: int = 5) -> torch.Ten
     total = 0
     for r, row in enumerate(board):
         for c, cell in enumerate(row):
-            if cell == 1:
+            if cell == 1:   # player 0
                 p1 += 1
                 center_mass += c / cols
                 total += 1
-            elif cell == 2:
+            elif cell == -1:  # player 1
                 p2 += 1
                 center_mass -= c / cols
                 total += 1

@@ -353,7 +353,11 @@ class MCTSTwoPlayer:
                 sid = env.state_id(state)
                 legal = env.legal_actions(state)
                 if not legal:
-                    draws += 1
+                    current = getattr(env, 'current_player', 0)
+                    if current == mcts_player:
+                        losses += 1
+                    else:
+                        wins += 1
                     break
 
                 current = getattr(env, 'current_player', 0)
@@ -403,7 +407,11 @@ class MCTSTwoPlayer:
             for step in range(max_steps):
                 legal = env.legal_actions(state)
                 if not legal:
-                    draws += 1
+                    current = getattr(env, 'current_player', 0)
+                    if current == mcts_player:
+                        losses += 1
+                    else:
+                        wins += 1
                     break
 
                 current = getattr(env, 'current_player', 0)

@@ -359,6 +359,8 @@ class ConnectEnv(Env):
 
     Action = column index (drop piece from top).
     State = tuple of tuples (the board).
+    Board encoding: 0=empty, 1=player 0, -1=player 1.
+    Players: 0 and 1 (consistent with NimEnv).
     """
 
     two_player = True
@@ -370,7 +372,7 @@ class ConnectEnv(Env):
         self.num_actions = cols
         self.num_states = 3 ** (rows * cols)  # approximate upper bound
         self._board = [[0] * cols for _ in range(rows)]
-        self._current_player = 1  # 1 or 2
+        self._current_player = 0  # 0 or 1
         self._state = self._to_state()
         self.two_player = True
 
@@ -380,9 +382,13 @@ class ConnectEnv(Env):
     def _from_state(self, state):
         self._board = [list(row) for row in state]
 
+    def _player_to_board(self, player):
+        """Map player index (0/1) to board value (1/-1)."""
+        return 1 if player == 0 else -1
+
     def reset(self):
         self._board = [[0] * self.cols for _ in range(self.rows)]
-        self._current_player = 1
+        self._current_player = 0
         self._state = self._to_state()
         return self._state
 
@@ -390,21 +396,21 @@ class ConnectEnv(Env):
         board = self._board if state is None else [list(row) for row in state]
         return [c for c in range(self.cols) if board[0][c] == 0]
 
-    def _drop(self, col, player):
+    def _drop(self, col, board_val):
         for r in range(self.rows - 1, -1, -1):
             if self._board[r][col] == 0:
-                self._board[r][col] = player
+                self._board[r][col] = board_val
                 return r
         return -1
 
-    def _check_win(self, r, c, player):
+    def _check_win(self, r, c, board_val):
         dirs = [(0, 1), (1, 0), (1, 1), (1, -1)]
         for dr, dc in dirs:
             count = 1
             for sign in (1, -1):
                 nr, nc = r + sign * dr, c + sign * dc
                 while (0 <= nr < self.rows and 0 <= nc < self.cols
-                       and self._board[nr][nc] == player):
+                       and self._board[nr][nc] == board_val):
                     count += 1
                     nr += sign * dr
                     nc += sign * dc
@@ -419,10 +425,11 @@ class ConnectEnv(Env):
             self._state = self._to_state()
             return self._state, -1.0, False
 
-        row = self._drop(col, self._current_player)
+        board_val = self._player_to_board(self._current_player)
+        row = self._drop(col, board_val)
         self._state = self._to_state()
 
-        if self._check_win(row, col, self._current_player):
+        if self._check_win(row, col, board_val):
             # Reward from player 0's perspective (consistent with NimEnv)
             reward = 1.0 if self._current_player == 0 else -1.0
             return self._state, reward, True
@@ -431,7 +438,7 @@ class ConnectEnv(Env):
         if all(self._board[0][c] != 0 for c in range(self.cols)):
             return self._state, 0.0, True
 
-        self._current_player = 3 - self._current_player  # toggle 1<->2
+        self._current_player = 1 - self._current_player  # toggle 0<->1
         return self._state, 0.0, False
 
     @property
@@ -454,14 +461,14 @@ class ConnectEnv(Env):
         self._state = state
         # Infer player: count total pieces on board
         pieces = sum(1 for row in state for cell in row if cell != 0)
-        self._current_player = 1 if pieces % 2 == 0 else 2
+        self._current_player = 0 if pieces % 2 == 0 else 1
 
     def state_id(self, state):
         sid = 0
         mul = 1
         for row in state:
             for cell in row:
-                sid += cell * mul
+                sid += (cell + 1) * mul  # map -1->0, 0->1, 1->2
                 mul *= 3
         return sid
 
