@@ -1,5 +1,11 @@
 # Geometric Superposition Search (GSS)
 
+> **Copyright (c) 2026 Eunkyum Kim <nemonanconcode@gmail.com>. All Rights Reserved.**
+> 
+> **Project Identity:** A Specialized Research Extension of the **Versor Framework**
+> **Base Framework DOI:** [10.5281/zenodo.18939519]
+> **License:** Apache License 2.0
+
 Research notebook exploring deterministic geometric beam search as an alternative to stochastic tree search (UCT/MCTS).
 
 Built on the [Versor](https://github.com/Concode0/versor) geometric algebra framework for PyTorch.
@@ -15,11 +21,11 @@ Use Clifford algebra structure to replace probabilistic exploration with geometr
 
 ## Results (vs UCB1 baseline)
 
-| Environment | GSS | UCB1 | Metric |
-|---|---|---|---|
-| 10-armed bandit | **38.6** | 114.8 | Cumulative regret |
-| Chain MDP | **~7 steps** | ~11 steps | Steps to goal |
-| 5x5 Maze | **0.930** | 0.882 | Success rate |
+| Environment     | GSS          | UCB1      | Metric            |
+| --------------- | ------------ | --------- | ----------------- |
+| 10-armed bandit | **38.6**     | 114.8     | Cumulative regret |
+| Chain MDP       | **~7 steps** | ~11 steps | Steps to goal     |
+| 5x5 Maze        | **0.930**    | 0.882     | Success rate      |
 
 GSS receives geometric embeddings encoding environment structure; UCB1 uses only visit counts and reward means. See Section 8 in the notebook for an honest discussion of this information asymmetry.
 
